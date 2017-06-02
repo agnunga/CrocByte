@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Very Own Apps">
+        <menu>
+            <item android:title="SMS Viewe">
+                <item
+                    android:id="@+id/nav_to_sms_manager"
+                    android:icon="@drawable/chat_bubbles_with_ellipsis_purple"
+                    android:title="My SMS" />
+            </item>
+            <item android:title="Music">
+                <item
+                    android:id="@+id/nav_to_music_player"
+                    android:icon="@drawable/headset_black"
+                    android:title="Play Music" />
+            </item>
+            <item android:title="Croc Messenger">
+                <item
+                    android:id="@+id/nav_to_croc_byte_messenger"
+                    android:icon="@drawable/comment_text_black"
+                    android:title="Croc Messenger"/>
+            </item>
+            <item android:title="QR Reader">
+                <item
+                    android:id="@+id/nav_to_qr_reader"
+                    android:icon="@drawable/qrcode_scan_black"
+                    android:title="Read QR Code" />
+            </item>
+            <item android:title="Scheduler">
+                <item
+                    android:id="@+id/nav_to_croc_scheduler"
+                    android:icon="@drawable/c_calendar_red"
+                    android:title="Scheduler" />
+            </item>
+            <item android:title="Contacts">
+                <item
+                    android:id="@+id/nav_to_croc_contacts"
+                    android:title="Contacts" />
+            </item>
+            <item android:title="Scheduler">
+                <item
+                    android:id="@+id/nav_to_croc_sms_landing"
+                    android:icon="@drawable/c_calendar_red"
+                    android:title="SMS Landing" />
+            </item>
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Import" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Gallery" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Slideshow" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Tools" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+
+
+</menu>

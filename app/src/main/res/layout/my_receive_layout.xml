@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_receive_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/mr_sharp_rec_conner"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8.5dp"
+        android:layout_marginRight="-15dp"
+        android:layout_weight="1"
+        android:src="@drawable/arrow_bg2" />
+
+    <TextView
+        android:id="@+id/mr_textViewRecMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="15dp"
+        android:layout_weight="6"
+        android:layout_alignLeft="@+id/mr_sharp_rec_conner"
+        android:background="@drawable/rounded_corner1"
+        android:padding="6dp"
+        android:text="Sasaa..."
+        android:textColor="#000" />
+</RelativeLayout>
