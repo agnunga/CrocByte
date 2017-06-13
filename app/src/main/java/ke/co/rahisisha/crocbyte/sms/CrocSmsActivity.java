@@ -17,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -37,6 +36,7 @@ public class CrocSmsActivity extends AppCompatActivity {
     private List<String> recipientList = new ArrayList<>();
     private String recipientText = "";
     private String messageText = "";
+//    private String phoneNumber = "";
 
     List<String> smsMessagesList = new ArrayList<>();
     ListView lv_messages;
@@ -62,12 +62,14 @@ public class CrocSmsActivity extends AppCompatActivity {
         ArrayList<MyMessage> myMessages = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_croc_sms);
+//        Bundle recData = getIntent().getExtras();
+//        phoneNumber = recData.getString("phone_no");
 
         lv_messages = (ListView) findViewById(R.id.messages);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
             getPermissionToReadSMS();
         } else {
-            myMessages = refreshAllISms();
+            myMessages = getAllISms();
         }
         customThreadAdapter = new CustomThreadAdapter(this, myMessages);
         lv_messages.setAdapter(customThreadAdapter);
@@ -205,7 +207,7 @@ public class CrocSmsActivity extends AppCompatActivity {
             if (grantResults.length == 1 &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Read SMS permission granted", Toast.LENGTH_SHORT).show();
-                refreshAllISms();
+                getAllISms();
             } else {
                 Toast.makeText(this, "Read SMS permission denied", Toast.LENGTH_SHORT).show();
             }
@@ -218,11 +220,18 @@ public class CrocSmsActivity extends AppCompatActivity {
 
     }
 
-    public ArrayList<MyMessage> refreshAllISms() {
+    public ArrayList<MyMessage> getAllISms() {
         ArrayList<MyMessage> myMessages = new ArrayList<>();
-        MyMessage myMessage = null;
+
         ContentResolver contentResolver = getContentResolver();
-        Cursor cursor = contentResolver.query(Uri.parse("content://sms"), null, null, null, "date ASC");
+        Cursor cursor = contentResolver.query(Uri.parse("content://sms"),
+                null,
+                null,
+                null,
+                "date ASC");
+
+//        "address = ?",
+//        new String[] {phoneNumber},
 
         int indexBody = cursor.getColumnIndex("body");
         int indexAddress = cursor.getColumnIndex("address");
@@ -231,12 +240,8 @@ public class CrocSmsActivity extends AppCompatActivity {
         int type = cursor.getColumnIndex("type");
 //        customThreadAdapter.clear();
         do {
-            myMessage = new MyMessage();
-            MyContact myContact = new MyContact();
-            List<String> phones = new ArrayList<>();
-            phones.add(cursor.getString(indexAddress));
-            myContact.setPhone_no(phones);
-            myMessage.setPhone(myContact);
+            MyMessage myMessage = new MyMessage();
+            myMessage.setPhone_no(cursor.getString(indexAddress));
             myMessage.setTextMessage(cursor.getString(indexBody));
             String date =cursor.getString(indexDate);
             Long timestamp = Long.parseLong(date);
@@ -245,7 +250,7 @@ public class CrocSmsActivity extends AppCompatActivity {
             Date finaldate = calendar.getTime();
 
             if(cursor.getString(type).equalsIgnoreCase("1")){
-               myMessage.setType(MyMessage.SmsType.RECEIVED);
+                myMessage.setType(MyMessage.SmsType.RECEIVED);
             }
             else if(cursor.getString(type).equalsIgnoreCase("2")){
                 //sms sent

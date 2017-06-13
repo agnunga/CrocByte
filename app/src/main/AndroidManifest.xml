@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.SEND_RESPOND_VIA_MESSAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" /> -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -94,6 +93,10 @@
         <activity
             android:name=".sms.CrocSmsLanding"
             android:label="@string/title_activity_croc_sms_landing"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UltimateActivity"
+            android:label="@string/title_activity_ultimate"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -61,14 +61,9 @@ public class MyContactAdapter extends BaseAdapter {
 
             MyContact myContact;
             myContact =  myContacts.get(position);
-            String phone_nos = "";
-            List<String> phones = myContact.getPhone_no();
-            for (String phone :phones){
-                phone_nos+=phone+" ; ";
-            }
             profile_pic.setImageDrawable(mContext.getResources().getDrawable(R.drawable.an_agunga));
             name_entry.setText(myContact.getName());
-            number_entry.setText(phone_nos);
+            number_entry.setText(myContact.getPhone_no());
             source_pic.setImageDrawable(mContext.getResources().getDrawable(R.drawable.time_passing));
         }
         return view;

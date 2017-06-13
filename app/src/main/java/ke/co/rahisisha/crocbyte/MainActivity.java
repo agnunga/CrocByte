@@ -122,6 +122,9 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_to_croc_sms_landing){
             Intent i = new Intent(MainActivity.this, CrocSmsLanding.class);
             startActivity(i);
+        }else if (id == R.id.nav_to_try_tabs){
+            Intent i = new Intent(MainActivity.this, UltimateActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -8,14 +8,14 @@ import java.util.List;
 
 public class MyContact {
     private String name;
-    private List<String> phone_no;
-    private List<String> email;
+    private String phone_no;
+    private String email;
 
-    public List<String> getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(List<String> email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -27,11 +27,11 @@ public class MyContact {
         this.name = name;
     }
 
-    public List<String> getPhone_no() {
+    public String getPhone_no() {
         return phone_no;
     }
 
-    public void setPhone_no(List<String> phone_no) {
+    public void setPhone_no(String phone_no) {
         this.phone_no = phone_no;
     }
 }

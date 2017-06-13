@@ -1,7 +1,5 @@
 package ke.co.rahisisha.crocbyte.sms;
 
-import java.util.List;
-
 import ke.co.rahisisha.crocbyte.crocContacts.MyContact;
 
 /**
@@ -9,7 +7,7 @@ import ke.co.rahisisha.crocbyte.crocContacts.MyContact;
  */
 
 public class MyMessage {
-    private MyContact phone;
+    private String phone_no;
     private String  textMessage;
     private String time;
     private SmsType type;
@@ -22,12 +20,12 @@ public class MyMessage {
         this.type = type;
     }
 
-    public MyContact getPhone() {
-        return phone;
+    public String getPhone_no() {
+        return phone_no;
     }
 
-    public void setPhone(MyContact phone) {
-        this.phone = phone;
+    public void setPhone_no(String phone_no) {
+        this.phone_no = phone_no;
     }
 
     public String getTextMessage() {

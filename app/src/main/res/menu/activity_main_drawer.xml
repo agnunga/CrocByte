@@ -45,6 +45,12 @@
                     android:icon="@drawable/c_calendar_red"
                     android:title="SMS Landing" />
             </item>
+            <item android:title="Tabs">
+                <item
+                    android:id="@+id/nav_to_try_tabs"
+                    android:icon="@drawable/c_calendar_red"
+                    android:title="Tabs Trial" />
+            </item>
         </menu>
     </item>
 

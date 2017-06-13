@@ -9,7 +9,6 @@ import android.view.View;
 
 import ke.co.rahisisha.crocbyte.R;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import android.app.ProgressDialog;
@@ -31,7 +30,6 @@ public class ReadContacts extends AppCompatActivity {
     Cursor cursor;
     int counter;
     ArrayList<MyContact> contactsList = new ArrayList<>();
-    HashSet<MyContact> no_duplicate = new HashSet<>();
     MyContactAdapter myContactAdapter;
 
     @Override
@@ -60,12 +58,10 @@ public class ReadContacts extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                getContacts();
+                contactsList = findAllContacts();
+                loadToAdapter();
             }
         }).start();
-        no_duplicate.addAll(contactsList);
-        contactsList.clear();
-        contactsList.addAll(no_duplicate);
         myContactAdapter = new MyContactAdapter(this, contactsList);
         // Set onClickListener to the list item.
         contacts_listView.setOnItemClickListener(new OnItemClickListener() {
@@ -77,64 +73,7 @@ public class ReadContacts extends AppCompatActivity {
             }
         });
     }
-    public void getContacts() {
-        MyContact myContact =null;
-        List<String> phone_nos = null;
-        List<String> emails = null;
-
-        Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
-        String _ID = ContactsContract.Contacts._ID;
-        String DISPLAY_NAME = ContactsContract.Contacts.DISPLAY_NAME;
-        String HAS_PHONE_NUMBER = ContactsContract.Contacts.HAS_PHONE_NUMBER;
-        Uri PhoneCONTENT_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        String Phone_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
-        String NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
-        Uri EmailCONTENT_URI =  ContactsContract.CommonDataKinds.Email.CONTENT_URI;
-        String EmailCONTACT_ID = ContactsContract.CommonDataKinds.Email.CONTACT_ID;
-        String DATA = ContactsContract.CommonDataKinds.Email.DATA;
-        ContentResolver contentResolver = getContentResolver();
-        cursor = getContentResolver().query(
-                CONTENT_URI,
-                null, null, null,
-                ContactsContract.Contacts.SORT_KEY_PRIMARY + " ASC");
-
-        // Iterate every contact in the phone
-        if (cursor.getCount() > 0) {
-            counter = 0;
-            while (cursor.moveToNext()) {
-                myContact = new MyContact();
-                phone_nos = new ArrayList<>();
-                emails = new ArrayList<>();
-                // Update the progress message
-                updateBarHandler.post(new Runnable() {
-                    public void run() {
-                        progressDialog.setMessage("Reading contacts : "+ counter++ +"/"+cursor.getCount());
-                    }
-                });
-                String contact_id = cursor.getString(cursor.getColumnIndex( _ID ));
-
-                myContact.setName(cursor.getString(cursor.getColumnIndex( DISPLAY_NAME )));
-                int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex( HAS_PHONE_NUMBER )));
-                if (hasPhoneNumber > 0) {
-                    Cursor phoneCursor = contentResolver.query(PhoneCONTENT_URI, null, Phone_CONTACT_ID + " = ?", new String[] { contact_id }, null);
-                    while (phoneCursor.moveToNext()) {
-                        String phone = phoneCursor.getString(phoneCursor.getColumnIndex(NUMBER));
-                        phone_nos.add(phone);
-                    }
-                    myContact.setPhone_no(phone_nos);
-                    phoneCursor.close();
-                    // Read every email id associated with the contact
-                    Cursor emailCursor = contentResolver.query(EmailCONTENT_URI,    null, EmailCONTACT_ID+ " = ?", new String[] { contact_id }, null);
-                    while (emailCursor.moveToNext()) {
-                        String email = emailCursor.getString(emailCursor.getColumnIndex(DATA));
-                        emails.add(email);
-                    }
-                    myContact.setEmail(emails);
-                    emailCursor.close();
-                }
-                // Add the contact to the ArrayList
-                contactsList.add(myContact);
-            }
+    public void loadToAdapter() {
             // ListView has to be updated using a ui thread
             runOnUiThread(new Runnable() {
                 @Override
@@ -150,6 +89,66 @@ public class ReadContacts extends AppCompatActivity {
                 }
             }, 100);
         }
-    }
+   public ArrayList<MyContact> findAllContacts() {
+       MyContact myContact = null;
+        String phone_nos = "";
+       String emails = "";
+
+       Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
+       String _ID = ContactsContract.Contacts._ID;
+       String DISPLAY_NAME = ContactsContract.Contacts.DISPLAY_NAME;
+       String HAS_PHONE_NUMBER = ContactsContract.Contacts.HAS_PHONE_NUMBER;
+       Uri PhoneCONTENT_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+       String Phone_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
+       String NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
+       Uri EmailCONTENT_URI = ContactsContract.CommonDataKinds.Email.CONTENT_URI;
+       String EmailCONTACT_ID = ContactsContract.CommonDataKinds.Email.CONTACT_ID;
+       String DATA = ContactsContract.CommonDataKinds.Email.DATA;
+       ContentResolver contentResolver = getContentResolver();
+       cursor = getContentResolver().query(
+               CONTENT_URI,
+               null, null, null,
+               ContactsContract.Contacts.SORT_KEY_PRIMARY + " ASC");
+
+       // Iterate every contact in the phone
+       if (cursor.getCount() > 0) {
+           counter = 0;
+           while (cursor.moveToNext()) {
+               myContact = new MyContact();
+               phone_nos = "";
+               emails = "";
+               // Update the progress message
+               updateBarHandler.post(new Runnable() {
+                   public void run() {
+                       progressDialog.setMessage("Reading contacts : " + counter++ + "/" + cursor.getCount());
+                   }
+               });
+               String contact_id = cursor.getString(cursor.getColumnIndex(_ID));
+
+               myContact.setName(cursor.getString(cursor.getColumnIndex(DISPLAY_NAME)));
+               int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HAS_PHONE_NUMBER)));
+               if (hasPhoneNumber > 0) {
+                   Cursor phoneCursor = contentResolver.query(PhoneCONTENT_URI, null, Phone_CONTACT_ID + " = ?", new String[]{contact_id}, null);
+                   while (phoneCursor.moveToNext()) {
+                       String phone = phoneCursor.getString(phoneCursor.getColumnIndex(NUMBER));
+                       phone_nos+=phone+"; ";
+                   }
+                   myContact.setPhone_no(phone_nos);
+                   phoneCursor.close();
+                   // Read every email id associated with the contact
+                   Cursor emailCursor = contentResolver.query(EmailCONTENT_URI, null, EmailCONTACT_ID + " = ?", new String[]{contact_id}, null);
+                   while (emailCursor.moveToNext()) {
+                       String email = emailCursor.getString(emailCursor.getColumnIndex(DATA));
+                       emails+=email+"; ";
+                   }
+                   myContact.setEmail(emails);
+                   emailCursor.close();
+               }
+               // Add the contact to the ArrayList
+               contactsList.add(myContact);
+           }
+       }
+       return contactsList;
+   }
 }
 

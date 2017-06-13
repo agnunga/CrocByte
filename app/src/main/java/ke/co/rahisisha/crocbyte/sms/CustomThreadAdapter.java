@@ -10,10 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import ke.co.rahisisha.crocbyte.R;
-import ke.co.rahisisha.crocbyte.crocContacts.MyContact;
 
 /**
  * Created by agunga on 6/2/17.
@@ -37,13 +35,9 @@ public class CustomThreadAdapter extends ArrayAdapter<MyMessage> {
             TextView   message_time  = (TextView) view.findViewById(R.id.message_time);
             TextView   message_phone  = (TextView) view.findViewById(R.id.message_phone);
 
-            MyContact myContact = myMessage.getPhone();
-            List<String> phones = myContact.getPhone_no();
-
-
             textViewRecMsg.setText(myMessage.getTextMessage());
             message_time.setText(myMessage.getTime());
-            message_phone.setText(phones.get(0));
+            message_phone.setText(myMessage.getPhone_no());
 
             return view;
         }else {
@@ -55,13 +49,9 @@ public class CustomThreadAdapter extends ArrayAdapter<MyMessage> {
             TextView   message_time  = (TextView) view.findViewById(R.id.message_time);
             TextView   message_phone  = (TextView) view.findViewById(R.id.message_phone);
 
-            MyContact myContact = myMessage.getPhone();
-            List<String> phones = myContact.getPhone_no();
-
-
             textViewSentMsg.setText(myMessage.getTextMessage());
             message_time.setText(myMessage.getTime());
-            message_phone.setText(phones.get(0));
+            message_phone.setText(myMessage.getPhone_no());
             return view;
         }
     }

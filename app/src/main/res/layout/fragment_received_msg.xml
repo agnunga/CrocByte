@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="0dp"
     tools:context="layout.Received_msg">
 
     <RelativeLayout
@@ -9,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="-4dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -32,11 +33,29 @@
             android:background="@drawable/rounded_corner1"
             android:padding="6dp" >
 
+
+            <TextView
+                android:id="@+id/message_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="+254 712 929 181"
+                android:textSize="11sp" />
+
+            <View
+                android:id="@+id/line_hr"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/message_phone"
+                android:background="#73abb6b4"/>
+
             <TextView
                 android:id="@+id/textViewRecMsg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
+                android:paddingTop="5dp"
+                android:layout_below="@id/line_hr"
                 android:text="Sasaa..."
                 android:textColor="#000" />
 
@@ -47,16 +66,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/textViewRecMsg"
                 android:text="17:30"
-                android:textSize="11sp" />
-
-            <TextView
-                android:id="@+id/message_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewSentMsg"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:text="+254 712 929 181"
                 android:textSize="11sp" />
         </RelativeLayout>
     </RelativeLayout>
